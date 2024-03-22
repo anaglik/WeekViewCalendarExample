@@ -38,7 +38,10 @@ final class CalendarViewModel {
     }
     
     func updateSelectedDate() {
-        let currentDayOfWeek = selectedDate.dayOfWeek
-        selectedDate = currentWeeks[selectedWeekIndex].dates[currentDayOfWeek-1]
+        if let index = currentWeeks.first?.dates.firstIndex(of: selectedDate) {
+            selectedDate = currentWeeks[selectedWeekIndex].dates[index]
+        } else if let index = currentWeeks.last?.dates.firstIndex(of: selectedDate) {
+            selectedDate = currentWeeks[selectedWeekIndex].dates[index]
+        }
     }
 }

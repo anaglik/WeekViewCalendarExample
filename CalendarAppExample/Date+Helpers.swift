@@ -27,8 +27,8 @@ extension Date {
     var dayOfWeek: Int {
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: self)
-        let dayOfWeek = calendar.component(.weekday, from: today) - (calendar.firstWeekday - 1)
-        return dayOfWeek
+        let dayOfWeek = calendar.component(.weekday, from: today)
+        return dayOfWeek == 1 ? 7 : dayOfWeek - 1
     }
 }
 
