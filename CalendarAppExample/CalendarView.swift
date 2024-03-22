@@ -15,7 +15,7 @@ struct CalendarView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             TabView(selection: $viewModel.selectedWeekIndex) {
                 ForEach(Array(viewModel.currentWeeks.enumerated()), id: \.element) { index, week in
-                    weekView(for: week.dates)
+                    WeekView(viewModel: viewModel, week: week)
                         .tag(index)
                 }
             }
@@ -27,11 +27,14 @@ struct CalendarView: View {
                 .frame(maxWidth: .infinity)
         }
     }
-    
-    @ViewBuilder
-    func weekView(for dates: [Date]) -> some View {
+}
+
+private struct WeekView: View {
+    @Bindable var viewModel: CalendarViewModel
+    let week: Week
+    var body: some View {
         HStack {
-            ForEach(dates) { date in
+            ForEach(week.dates) { date in
                 DayView(date: date, selectedDate: $viewModel.selectedDate)
             }
         }
@@ -45,6 +48,7 @@ struct CalendarView: View {
                         // we need to detect index change + stop of scrolling
                         if value == 0.0 && (viewModel.selectedWeekIndex == 0 || viewModel.selectedWeekIndex == 2) {
                             viewModel.addNeededWeek()
+                            viewModel.updateSelectedDate()
                         }
                     })
             }
@@ -52,7 +56,7 @@ struct CalendarView: View {
     }
 }
 
-struct DayView: View {
+private struct DayView: View {
     let date: Date
     @Binding var selectedDate: Date
     private var isSelected: Bool { date == selectedDate }

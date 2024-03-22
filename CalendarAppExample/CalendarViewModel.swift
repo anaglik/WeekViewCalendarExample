@@ -4,11 +4,7 @@ import Foundation
 final class CalendarViewModel {
     private let calendar = Calendar.current
     var selectedDate: Date
-    var selectedWeekIndex = 1 {
-        didSet {
-            updateSelectedDate()
-        }
-    }
+    var selectedWeekIndex = 1
     var currentWeeks: [Week]
     
     init() {
@@ -41,10 +37,8 @@ final class CalendarViewModel {
         }
     }
     
-    private func updateSelectedDate() {
-        guard selectedWeekIndex == 0 || selectedWeekIndex == 2 else { return }
+    func updateSelectedDate() {
         let currentDayOfWeek = selectedDate.dayOfWeek
-        print("selected \(currentDayOfWeek)")
         selectedDate = currentWeeks[selectedWeekIndex].dates[currentDayOfWeek-1]
     }
 }
