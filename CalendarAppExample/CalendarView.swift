@@ -83,6 +83,9 @@ private struct DayView: View {
 
 #Preview {
     CalendarView()
+//    var tomorrow = Date()
+//    tomorrow.addTimeInterval(60*60*30)
+//    return DayView(date: .now, selectedDate: .constant(tomorrow))
 }
 
 private struct WeekViewOffsetKey: PreferenceKey {
